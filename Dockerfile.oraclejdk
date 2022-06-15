@@ -1,0 +1,27 @@
+FROM welikecode/oraclelinux
+
+MAINTAINER None
+
+ENV JAVA_VERSION=8 \
+    JAVA_UPDATE=321 \
+    JAVA_BUILD=27
+
+# FUCK oracle - otn-pub isn't working AGAIN
+# RUN curl --silent --location --remote-name --cookie "oraclelicense=a" http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.rpm \
+#     && rpm -ivh jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.rpm \
+#     && rm jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.rpm
+
+RUN curl --silent --location --remote-name --cookie "oraclelicense=a" https://javadl.oracle.com/webapps/download/GetFile/1.8.0_321-b07/df5ad55fdd604472a86a45a217032c7d/linux-i586/jdk-8u321-linux-x64.rpm \
+    && rpm -ivh jdk-8u321-linux-x64.rpm \
+    && rm jdk-8u321-linux-x64.rpm
+
+ENV JAVA_HOME=/usr/java/jdk1.${JAVA_VERSION}.0_${JAVA_UPDATE}/jre/bin/java \
+    PATH=${PATH}:${JAVA_HOME}/bin
+
+ENV JAVA_VERSION="" \
+    JAVA_UPDATE="" \
+    JAVA_BUILD=""
+
+ENTRYPOINT ["java"]
+
+CMD ["-fullversion"]

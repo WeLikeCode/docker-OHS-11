@@ -1,0 +1,26 @@
+version: '2.4'
+
+services:
+  oraclelinux:
+    build:
+      context: .
+      dockerfile: Dockerfile.oraclelinux
+    platform: ${PLATFORM_TAG:-linux/amd64}
+    image: welikecode/oraclelinux
+    command: time
+
+  oraclejdk:
+    build:
+      context: .
+      dockerfile: Dockerfile.oraclejdk
+    platform: ${PLATFORM_TAG:-linux/amd64}
+    image: welikecode/oraclelinux-oraclejdk
+
+  oracleohs:
+    build:
+      context: .
+      dockerfile: Dockerfile.ohs11g
+    platform: ${PLATFORM_TAG:-linux/amd64}
+    image: welikecode/oracle-ohs11g
+    ports:
+      - 7777:7777

@@ -1,0 +1,10 @@
+FROM oraclelinux:6.10
+
+MAINTAINER None 
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN yum update -y \
+    && yum install -y nano unzip \
+    && yum clean all \
+    && rm -rf /var/cache/yum/*
