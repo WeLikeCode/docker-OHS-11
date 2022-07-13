@@ -1,6 +1,15 @@
 version: '2.4'
 
 services:
+
+  apache2:
+    image: httpd:2.4
+    ports:
+      - "8111:80"
+    volumes:
+      #- ./apache2conf/:/share/
+      - ./apache2conf/:/usr/local/apache2/conf/
+
   oraclelinux:
     build:
       context: .
@@ -24,3 +33,14 @@ services:
     image: welikecode/oracle-ohs11g
     ports:
       - 7777:7777
+      - 4443:4443
+      - 7080:7080
+    volumes:
+      - ./shared:/shared
+      - ./ssl.conf:/oracle/Middleware/Oracle_WT1/instances/instance1/config/OHS/ohs1/ssl.conf
+      - ./httpd.conf:/oracle/Middleware/Oracle_WT1/instances/instance1/config/OHS/ohs1/httpd.conf
+    
+    dns:
+      - 192.168.1.153
+      - 172.22.2.153
+      
